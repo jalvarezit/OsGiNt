@@ -70,9 +70,9 @@ if ! check_git; then
 fi
 
 if [ -z $EXTENDED ]; then
-    git rev-list --all | xargs git show -s --format='%ae %ad' | awk '{print $1, $NF}' | sort -nk1 -t ' ' | uniq
+    (cd $DIRECTORY && git rev-list --all) | xargs git show -s --format='%ae %ad' | awk '{print $1, $NF}' | sort -nk1 -t ' ' | uniq
 else
-    git rev-list --all | xargs git show -s --format='%ae %ad' | awk '{print $1, $NF}' | sort -nk1 -t ' ' | uniq -c | while read -r line;do
+    (cd $DIRECTORY && git rev-list --all | xargs git show -s --format='%ae %ad' | awk '{print $1, $NF}' | sort -nk1 -t ' ' | uniq -c) | while read -r line;do
         echo $line;
     done
 fi
