@@ -33,7 +33,7 @@ while true; do
 case "$1" in
 -h | --help ) usage; exit 0 ;;
 -v | --version ) version; exit 0 ;;
--d | --directory ) DIRECTORY=$2 |  sed '/\/$/! s|$|/|'; shift 2;;
+-d | --directory ) DIRECTORY=$(echo $2 |  sed '/\/$/! s|$|/|'); shift 2;;
 -e | --extended ) EXTENDED="true"; shift 1;;
 -- ) shift; break ;;
 * ) break ;;
