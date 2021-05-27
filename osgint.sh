@@ -46,6 +46,10 @@ trap "func_unexpected" 1 # Generic code error
 ##############################################
 ### aux functions ###
 ##############################################
+check_git(){
+  git rev-parse --resolve-git-dir  &> /dev/null;
+  return $?
+}
 
 # main body
 
