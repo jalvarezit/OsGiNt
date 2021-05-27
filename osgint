@@ -4,7 +4,7 @@
 
 
 SCRIPTNAME="osgint.sh"
-SCRIPTVERSION="v0.1"
+SCRIPTVERSION="v1.0"
 
 # Default values
 DIRECTORY='./'
@@ -33,7 +33,7 @@ while true; do
 case "$1" in
 -h | --help ) usage; exit 0 ;;
 -v | --version ) version; exit 0 ;;
--d | --directory ) DIRECTORY=$2; shift 2;;
+-d | --directory ) DIRECTORY=$2 |  sed '/\/$/! s|$|/|'; shift 2;;
 -e | --extended ) EXTENDED="true"; shift 1;;
 -- ) shift; break ;;
 * ) break ;;
@@ -73,7 +73,10 @@ if [ -z $EXTENDED ]; then
     (cd $DIRECTORY && git rev-list --all) | xargs git show -s --format='%ae %ad' | awk '{print $1, $NF}' | sort -nk1 -t ' ' | uniq
 else
     (cd $DIRECTORY && git rev-list --all | xargs git show -s --format='%ae %ad' | awk '{print $1, $NF}' | sort -nk1 -t ' ' | uniq -c) | while read -r line;do
-        echo $line;
+        repetitions=$(echo $line | awk '{print $1}');
+        email=$(echo $line | awk '{print $2}');
+        matches=`(cd $DIRECTORY && git rev-list --all | xargs git show -s --format='%ae') | grep $email | wc -l`
+        echo $line | awk -v matches="$repetitions/$matches" '{$1=matches; print}'
     done
 fi
 
