@@ -1,8 +1,5 @@
 #!/bin/bash
 
-#git rev-list --all | xargs git show -s --format='%ae %ad' | awk '{print $1, $NF}' | sort -nk1 -t ' ' | uniq
-
-
 SCRIPTNAME="osgint.sh"
 SCRIPTVERSION="v1.0"
 
