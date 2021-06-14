@@ -55,11 +55,6 @@ check_git(){
   git rev-parse --resolve-git-dir $DIRECTORY.git &> /dev/null;
 }
 
-user_commits(){
-    
-    return 5;
-}
-
 # main body
 
 if ! check_git; then
